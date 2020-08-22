@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="activation-1.1.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/OneDrive/Documenti/#Code_Projects/LabB2.0/Lab-B/eclipse-workspace/ServerIp/lib/activation-1.1.1.jar!/" />
+      <root url="jar://$USER_HOME$/OneDrive/Documenti/#Code_Projects/LabB2.0/Lab-B/eclipse-workspace/ServerIp/lib/javax.mail.jar!/" />
+      <root url="jar://$USER_HOME$/OneDrive/Documenti/#Code_Projects/LabB2.0/Lab-B/eclipse-workspace/ServerIp/lib/postgresql-42.2.12.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
