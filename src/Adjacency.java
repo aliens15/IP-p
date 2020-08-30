@@ -1,51 +1,23 @@
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 
 public class Adjacency {
-    private Node node;
-    private NodeList list;
-    private Boolean[] arrayTF;
-    private Tile[][] adjacencyList;
+    private DiceData[][][] adjacencyList;
 
-    final String[][] matRicevuta = {
-            {"G", "A", "U", "T"},
-            {"P", "R", "M", "R"},
-            {"D", "O", "L", "A"},
-            {"E", "S", "I", "C"},
-    };
-    private String [][] adjacency = new String[16][8];
+    public Adjacency(String[][] matRicevuta, int rows, int columns) {
+        this.adjacencyList = new DiceData[rows][columns][];
+        createList(matRicevuta);
+        for (int i = 0; i < adjacencyList[2][2].length; i++) {
+            System.out.println(adjacencyList[2][2][i].getLetter());
+            System.out.println(Arrays.toString(adjacencyList[2][2][i].getPosition()));
 
-    public Adjacency(String[][] matRicevuta) {
-    //        this.adjacencyList[0] = new Tile[] {new Tile(matRicevuta[0][1],1), new Tile(matRicevuta[1][1], 5)};
-
-        this.adjacencyList = new Tile[16][];
-
-        int count = 0;
-        for(int i = 0; i < matRicevuta.length; i++) {
-            for(int j = 0; j < matRicevuta[i].length; j++) {
-
-                LinkedList<Tile> tempList = new LinkedList<>();
-
-                for (int X = i - 1; X <= i + 1; X++) {
-                    for (int Y = 0; Y <= j + 1; Y++) {
-                        if (!((X == i) && (Y == j))) {
-                            if (checkBoundry(X, Y)) {
-                                tempList.add(new Tile(matRicevuta[X][Y], X, Y));
-                            }
-                        }
-                    }
-                }
-
-                adjacencyList[count] = tempList.toArray(new Tile[tempList.size()]);
-            }
         }
     }
 
-    private boolean checkBoundry(int X, int Y) {
+    private boolean checkBoundry(String[][] matRicevuta, int X, int Y) {
         int Xsize = matRicevuta.length;
         int Ysize = matRicevuta[0].length;
         if((X >= 0) & (X < Xsize) & (Y >= 0) & (Y < Ysize)) {
@@ -54,46 +26,58 @@ public class Adjacency {
         return false;
     }
 
-    void createList(String[][] adjacency) {
-        //if pos 0 ---> arraylength = 3
-        int count = 1;
-        for (int i = 0; i < 4; i++) {
-            int countL = 0;
-            for (int j = 0; j < 4; j++) {
-                if(i!=0) {
-                    adjacency[count][countL++] = matRicevuta[i-1][j];
-                    if(j!=0) adjacency[count][countL++] = matRicevuta[i-1][j-1];
-                    if(j!=3) adjacency[count][countL++] = matRicevuta[i-1][j+1];
+    void createList(String[][] matRicevuta){
+        for(int i = 0; i < matRicevuta.length; i++) {
+            for(int j = 0; j < matRicevuta[i].length; j++) {
+                LinkedList<DiceData> tempList = new LinkedList<>();
+
+                for (int X = i - 1; X <= i + 1; X++) {
+                    for (int Y = j - 1; Y <= j + 1; Y++) {
+                        if (!((X == i) && (Y == j))) {
+                            if (checkBoundry(matRicevuta, X, Y)) {
+                                tempList.add(new DiceData(matRicevuta[X][Y], X, Y));
+                            }
+                        }
+                    }
                 }
-                if(j!=0) {
-                    adjacency[count][countL++] = matRicevuta[i][j-1];
-                }
-                if(j!=3) {
-                    adjacency[count][countL++] = matRicevuta[i][j+1];
-                }
-                if(i!=3) {
-                    adjacency[count][countL++] = matRicevuta[i+1][j];
-                    if(j!=0) adjacency[count][countL++] = matRicevuta[i+1][j-1];
-                    if(j!=3) adjacency[count][countL++] = matRicevuta[i+1][j+1];
-                }
+                adjacencyList[i][j] = tempList.toArray(new DiceData[tempList.size()]);
             }
-            count++;
         }
+    }
+
+    public DiceData[][][] getAdjacencyList() {
+        return adjacencyList;
     }
 
     //classe doppia lettera-posizione
     public static void main(String[] args) {
-        //Adjacency adjacency = new Adjacency();
+//        final String[][] matRicevuta = {
+//                {"G", "A", "U", "T"},
+//                {"P", "R", "M", "R"},
+//                {"D", "O", "L", "A"},
+//                {"E", "S", "I", "C"},
+//        };
+//        Adjacency adjacency = new Adjacency(matRicevuta, 4,4);
 
         //{["a", "1"],["B", "2"],["C", "3"]};
         //matr[1] = new String[]{"A","B", "C", "D", "E"};
         //matr[2] = new String[]{"A","B", "C", "D", "E"};
 
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                //System.out.println(adjacency.matRicevuta[i][j]);
-            }
-
-        }
+//        for (int i = 0; i < 4; i++) {
+//            for (int j = 0; j < 4; j++) {
+//                //System.out.println(adjacency.matRicevuta[i][j]);
+//            }
+//
+//        }
+//        String startL = "p";
+//        String startL2 = "qu";
+//        String subWord = "prova";
+//        String subWord2 = "questa";
+//        if(startL.equals(subWord.substring(0,startL.length()))){
+//            System.out.println(subWord.substring(startL.length()));
+//        }
+//        if(startL2.equals(subWord2.substring(0,startL2.length()))){
+//            System.out.println(subWord2.substring(startL2.length()));
+//        }
     }
 }
